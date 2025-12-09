@@ -11,8 +11,10 @@ class Book(models.Model):
 
     title = models.CharField(max_length=100, unique=True)
     author = models.CharField(max_length=100)
-    cover = models.CharField(max_length=10, choices=CoverChoices.choices)
-    inventory = models.IntegerField(default=0, validators=[MinValueValidator(0)])
+    cover = models.CharField(max_length=10,
+                             choices=CoverChoices.choices)
+    inventory = models.IntegerField(default=0,
+                                    validators=[MinValueValidator(0)])
     daily_fee = models.DecimalField(max_digits=10, decimal_places=2)
 
     def borrow(self):
@@ -26,10 +28,10 @@ class Book(models.Model):
         self.save()
 
     def __str__(self):
-        return (f"{self.title},"
-                f" {self.author},"
-                f" {self.cover},"
-                f" inventory: {self.inventory}, "
+        return (f"{self.title}, "
+                f"{self.author}, "
+                f"{self.cover}, "
+                f"inventory: {self.inventory}, "
                 f"{self.daily_fee}")
 
 
@@ -60,7 +62,8 @@ class Payment(models.Model):
         FINE = "FINE"
 
     status = models.CharField(max_length=10, choices=StatusChoices.choices)
-    type = models.CharField(max_length=10, choices=TypeChoices.choices)
+    type_transaction = models.CharField(max_length=10,
+                                        choices=TypeChoices.choices)
     borrowing = models.ForeignKey(Borrowing,
                                   on_delete=models.CASCADE,
                                   related_name="payments")
@@ -68,4 +71,7 @@ class Payment(models.Model):
     session_id = models.CharField(max_length=200)
 
     def __str__(self):
-        return f"{self.status}, {self.type}, {self.session_url}, {self.session_id}"
+        return (f"{self.status}, "
+                f"{self.type_transaction}, "
+                f"{self.session_url}, "
+                f"{self.session_id}")
