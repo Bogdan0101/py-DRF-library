@@ -30,5 +30,489 @@
       "groups": [],
       "user_permissions": []
     }
+  },
+  {
+    "model": "library.book",
+    "pk": 1,
+    "fields": {
+      "title": "Clean Code",
+      "author": "Robert C. Martin",
+      "cover": "HARD",
+      "inventory": 5,
+      "daily_fee": "1.50"
+    }
+  },
+  {
+    "model": "library.book",
+    "pk": 2,
+    "fields": {
+      "title": "The Pragmatic Programmer",
+      "author": "Andrew Hunt",
+      "cover": "SOFT",
+      "inventory": 3,
+      "daily_fee": "2.00"
+    }
+  },
+  {
+    "model": "library.book",
+    "pk": 3,
+    "fields": {
+      "title": "Python Tricks",
+      "author": "Dan Bader",
+      "cover": "HARD",
+      "inventory": 2,
+      "daily_fee": "1.00"
+    }
+  },
+  {
+    "model": "library.book",
+    "pk": 4,
+    "fields": {
+      "title": "Effective Java",
+      "author": "Joshua Bloch",
+      "cover": "HARD",
+      "inventory": 4,
+      "daily_fee": "1.80"
+    }
+  },
+  {
+    "model": "library.book",
+    "pk": 5,
+    "fields": {
+      "title": "Design Patterns",
+      "author": "Erich Gamma",
+      "cover": "SOFT",
+      "inventory": 2,
+      "daily_fee": "2.50"
+    }
+  },
+  {
+    "model": "library.book",
+    "pk": 6,
+    "fields": {
+      "title": "Refactoring",
+      "author": "Martin Fowler",
+      "cover": "HARD",
+      "inventory": 3,
+      "daily_fee": "2.00"
+    }
+  },
+  {
+    "model": "library.book",
+    "pk": 7,
+    "fields": {
+      "title": "Introduction to Algorithms",
+      "author": "Cormen et al.",
+      "cover": "SOFT",
+      "inventory": 2,
+      "daily_fee": "2.20"
+    }
+  },
+  {
+    "model": "library.book",
+    "pk": 8,
+    "fields": {
+      "title": "JavaScript: The Good Parts",
+      "author": "Douglas Crockford",
+      "cover": "HARD",
+      "inventory": 5,
+      "daily_fee": "1.70"
+    }
+  },
+  {
+    "model": "library.book",
+    "pk": 9,
+    "fields": {
+      "title": "You Don't Know JS",
+      "author": "Kyle Simpson",
+      "cover": "SOFT",
+      "inventory": 3,
+      "daily_fee": "1.50"
+    }
+  },
+  {
+    "model": "library.book",
+    "pk": 10,
+    "fields": {
+      "title": "Head First Design Patterns",
+      "author": "Eric Freeman",
+      "cover": "HARD",
+      "inventory": 4,
+      "daily_fee": "2.00"
+    }
+  },
+  {
+    "model": "library.book",
+    "pk": 11,
+    "fields": {
+      "title": "Deep Learning",
+      "author": "Ian Goodfellow",
+      "cover": "HARD",
+      "inventory": 2,
+      "daily_fee": "2.80"
+    }
+  },
+  {
+    "model": "library.book",
+    "pk": 12,
+    "fields": {
+      "title": "Fluent Python",
+      "author": "Luciano Ramalho",
+      "cover": "SOFT",
+      "inventory": 3,
+      "daily_fee": "2.50"
+    }
+  },
+  {
+    "model": "library.book",
+    "pk": 13,
+    "fields": {
+      "title": "Cracking the Coding Interview",
+      "author": "Gayle Laakmann McDowell",
+      "cover": "HARD",
+      "inventory": 4,
+      "daily_fee": "1.90"
+    }
+  },
+  {
+    "model": "library.book",
+    "pk": 14,
+    "fields": {
+      "title": "Algorithms",
+      "author": "Robert Sedgewick",
+      "cover": "SOFT",
+      "inventory": 3,
+      "daily_fee": "2.20"
+    }
+  },
+  {
+    "model": "library.book",
+    "pk": 15,
+    "fields": {
+      "title": "Clean Architecture",
+      "author": "Robert C. Martin",
+      "cover": "HARD",
+      "inventory": 5,
+      "daily_fee": "2.10"
+    }
+  },
+  {
+    "model": "library.book",
+    "pk": 16,
+    "fields": {
+      "title": "The Art of Computer Programming",
+      "author": "Donald Knuth",
+      "cover": "SOFT",
+      "inventory": 2,
+      "daily_fee": "3.00"
+    }
+  },
+  {
+    "model": "library.book",
+    "pk": 17,
+    "fields": {
+      "title": "Effective Python",
+      "author": "Brett Slatkin",
+      "cover": "HARD",
+      "inventory": 4,
+      "daily_fee": "1.80"
+    }
+  },
+  {
+    "model": "library.book",
+    "pk": 18,
+    "fields": {
+      "title": "Code Complete",
+      "author": "Steve McConnell",
+      "cover": "SOFT",
+      "inventory": 3,
+      "daily_fee": "2.00"
+    }
+  },
+  {
+    "model": "library.book",
+    "pk": 19,
+    "fields": {
+      "title": "Python Cookbook",
+      "author": "David Beazley",
+      "cover": "HARD",
+      "inventory": 2,
+      "daily_fee": "1.70"
+    }
+  },
+  {
+    "model": "library.book",
+    "pk": 20,
+    "fields": {
+      "title": "The C Programming Language",
+      "author": "Kernighan & Ritchie",
+      "cover": "SOFT",
+      "inventory": 4,
+      "daily_fee": "1.50"
+    }
+  },
+  {
+    "model": "library.borrowing",
+    "pk": 1,
+    "fields": {
+      "borrow_date": "2025-12-01",
+      "expected_return_date": "2025-12-10",
+      "actual_return_date": null,
+      "book": 1,
+      "user": 1
+    }
+  },
+  {
+    "model": "library.borrowing",
+    "pk": 2,
+    "fields": {
+      "borrow_date": "2025-12-02",
+      "expected_return_date": "2025-12-11",
+      "actual_return_date": null,
+      "book": 5,
+      "user": 2
+    }
+  },
+  {
+    "model": "library.payment",
+    "pk": 1,
+    "fields": {
+      "status": "PENDING",
+      "type": "PAYMENT",
+      "borrowing": 1,
+      "session_url": "https://payment.example.com/session/1",
+      "session_id": "sess_abc123"
+    }
+  },
+  {
+    "model": "library.payment",
+    "pk": 2,
+    "fields": {
+      "status": "PENDING",
+      "type": "PAYMENT",
+      "borrowing": 2,
+      "session_url": "https://payment.example.com/session/2",
+      "session_id": "sess_def456"
+    }
+  },
+  {
+    "model": "library.borrowing",
+    "pk": 3,
+    "fields": {
+      "borrow_date": "2025-12-03",
+      "expected_return_date": "2025-12-12",
+      "actual_return_date": null,
+      "book": 3,
+      "user": 1
+    }
+  },
+  {
+    "model": "library.borrowing",
+    "pk": 4,
+    "fields": {
+      "borrow_date": "2025-12-04",
+      "expected_return_date": "2025-12-13",
+      "actual_return_date": null,
+      "book": 7,
+      "user": 2
+    }
+  },
+  {
+    "model": "library.borrowing",
+    "pk": 5,
+    "fields": {
+      "borrow_date": "2025-12-05",
+      "expected_return_date": "2025-12-14",
+      "actual_return_date": null,
+      "book": 10,
+      "user": 1
+    }
+  },
+  {
+    "model": "library.borrowing",
+    "pk": 6,
+    "fields": {
+      "borrow_date": "2025-12-06",
+      "expected_return_date": "2025-12-15",
+      "actual_return_date": null,
+      "book": 12,
+      "user": 2
+    }
+  },
+  {
+    "model": "library.borrowing",
+    "pk": 7,
+    "fields": {
+      "borrow_date": "2025-12-07",
+      "expected_return_date": "2025-12-16",
+      "actual_return_date": null,
+      "book": 14,
+      "user": 1
+    }
+  },
+  {
+    "model": "library.borrowing",
+    "pk": 8,
+    "fields": {
+      "borrow_date": "2025-12-08",
+      "expected_return_date": "2025-12-17",
+      "actual_return_date": null,
+      "book": 16,
+      "user": 2
+    }
+  },
+  {
+    "model": "library.borrowing",
+    "pk": 9,
+    "fields": {
+      "borrow_date": "2025-12-09",
+      "expected_return_date": "2025-12-18",
+      "actual_return_date": null,
+      "book": 18,
+      "user": 1
+    }
+  },
+  {
+    "model": "library.borrowing",
+    "pk": 10,
+    "fields": {
+      "borrow_date": "2025-12-10",
+      "expected_return_date": "2025-12-19",
+      "actual_return_date": null,
+      "book": 20,
+      "user": 2
+    }
+  },
+  {
+    "model": "library.borrowing",
+    "pk": 11,
+    "fields": {
+      "borrow_date": "2025-12-01",
+      "expected_return_date": "2025-12-10",
+      "actual_return_date": null,
+      "book": 2,
+      "user": 1
+    }
+  },
+  {
+    "model": "library.borrowing",
+    "pk": 12,
+    "fields": {
+      "borrow_date": "2025-12-02",
+      "expected_return_date": "2025-12-11",
+      "actual_return_date": null,
+      "book": 4,
+      "user": 2
+    }
+  },
+  {
+    "model": "library.payment",
+    "pk": 3,
+    "fields": {
+      "status": "PENDING",
+      "type": "PAYMENT",
+      "borrowing": 3,
+      "session_url": "https://payment.example.com/session/3",
+      "session_id": "sess_ghi789"
+    }
+  },
+  {
+    "model": "library.payment",
+    "pk": 4,
+    "fields": {
+      "status": "PENDING",
+      "type": "PAYMENT",
+      "borrowing": 4,
+      "session_url": "https://payment.example.com/session/4",
+      "session_id": "sess_jkl012"
+    }
+  },
+  {
+    "model": "library.payment",
+    "pk": 5,
+    "fields": {
+      "status": "PENDING",
+      "type": "PAYMENT",
+      "borrowing": 5,
+      "session_url": "https://payment.example.com/session/5",
+      "session_id": "sess_mno345"
+    }
+  },
+  {
+    "model": "library.payment",
+    "pk": 6,
+    "fields": {
+      "status": "PENDING",
+      "type": "PAYMENT",
+      "borrowing": 6,
+      "session_url": "https://payment.example.com/session/6",
+      "session_id": "sess_pqr678"
+    }
+  },
+  {
+    "model": "library.payment",
+    "pk": 7,
+    "fields": {
+      "status": "PENDING",
+      "type": "PAYMENT",
+      "borrowing": 7,
+      "session_url": "https://payment.example.com/session/7",
+      "session_id": "sess_stu901"
+    }
+  },
+  {
+    "model": "library.payment",
+    "pk": 8,
+    "fields": {
+      "status": "PENDING",
+      "type": "PAYMENT",
+      "borrowing": 8,
+      "session_url": "https://payment.example.com/session/8",
+      "session_id": "sess_vwx234"
+    }
+  },
+  {
+    "model": "library.payment",
+    "pk": 9,
+    "fields": {
+      "status": "PENDING",
+      "type": "PAYMENT",
+      "borrowing": 9,
+      "session_url": "https://payment.example.com/session/9",
+      "session_id": "sess_yza567"
+    }
+  },
+  {
+    "model": "library.payment",
+    "pk": 10,
+    "fields": {
+      "status": "PENDING",
+      "type": "PAYMENT",
+      "borrowing": 10,
+      "session_url": "https://payment.example.com/session/10",
+      "session_id": "sess_bcd890"
+    }
+  },
+  {
+    "model": "library.payment",
+    "pk": 11,
+    "fields": {
+      "status": "PENDING",
+      "type": "PAYMENT",
+      "borrowing": 11,
+      "session_url": "https://payment.example.com/session/11",
+      "session_id": "sess_efg123"
+    }
+  },
+  {
+    "model": "library.payment",
+    "pk": 12,
+    "fields": {
+      "status": "PENDING",
+      "type": "PAYMENT",
+      "borrowing": 12,
+      "session_url": "https://payment.example.com/session/12",
+      "session_id": "sess_hij456"
+    }
   }
 ]
