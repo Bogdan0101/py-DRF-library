@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from library.helper import send_telegram_message
 from library.models import (
     Book,
     Borrowing,
@@ -20,18 +21,29 @@ class BookTitleSerializer(BookSerializer):
 class BorrowingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Borrowing
-        fields = ("id", "borrow_date", "actual_return_date", "expected_return_date", "is_active", "book", "user")
+        fields = ("id",
+                  "borrow_date",
+                  "actual_return_date",
+                  "expected_return_date",
+                  "is_active",
+                  "book",
+                  "user")
         read_only_fields = ("id", "user", "is_active",)
 
     def create(self, validated_data):
         book = validated_data["book"]
         if book.inventory <= 0:
-            raise serializers.ValidationError("Inventory must be greater than 0")
+            raise (serializers
+                   .ValidationError("Inventory must be greater than 0"))
         book.borrow()
         borrowing = Borrowing.objects.create(
             **validated_data,
             user=self.context["request"].user,
         )
+        message = (f"New borrowing: '{book.title}', "
+                   f"User: {borrowing.user.email}, "
+                   f"Expected: {borrowing.expected_return_date}")
+        send_telegram_message(message)
         return borrowing
 
     def update(self, instance, validated_data):
@@ -48,15 +60,29 @@ class BorrowingSerializer(serializers.ModelSerializer):
 class BorrowingCreateSerializer(BorrowingSerializer):
     class Meta:
         model = Borrowing
-        fields = ("id", "borrow_date", "actual_return_date", "expected_return_date", "book", "user")
+        fields = ("id",
+                  "borrow_date",
+                  "actual_return_date",
+                  "expected_return_date",
+                  "book",
+                  "user")
         read_only_fields = ("id", "borrow_date", "actual_return_date", "user")
 
 
 class BorrowingUpdateSerializer(BorrowingSerializer):
     class Meta:
         model = Borrowing
-        fields = ("id", "borrow_date", "actual_return_date", "expected_return_date", "book", "user")
-        read_only_fields = ("id", "borrow_date", "expected_return_date", "user", "book")
+        fields = ("id",
+                  "borrow_date",
+                  "actual_return_date",
+                  "expected_return_date",
+                  "book",
+                  "user")
+        read_only_fields = ("id",
+                            "borrow_date",
+                            "expected_return_date",
+                            "user",
+                            "book")
 
 
 class BorrowingListSerializer(BorrowingSerializer):
@@ -64,7 +90,13 @@ class BorrowingListSerializer(BorrowingSerializer):
 
     class Meta:
         model = Borrowing
-        fields = ("id", "borrow_date", "actual_return_date", "expected_return_date", "is_active", "book", "user")
+        fields = ("id",
+                  "borrow_date",
+                  "actual_return_date",
+                  "expected_return_date",
+                  "is_active",
+                  "book",
+                  "user")
 
 
 class BorrowingDetailSerializer(BorrowingSerializer):
@@ -73,4 +105,10 @@ class BorrowingDetailSerializer(BorrowingSerializer):
 
     class Meta:
         model = Borrowing
-        fields = ("id", "borrow_date", "actual_return_date", "expected_return_date", "is_active", "book", "user")
+        fields = ("id",
+                  "borrow_date",
+                  "actual_return_date",
+                  "expected_return_date",
+                  "is_active",
+                  "book",
+                  "user")
