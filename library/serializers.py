@@ -20,8 +20,8 @@ class BookTitleSerializer(BookSerializer):
 class BorrowingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Borrowing
-        fields = ("id", "borrow_date", "actual_return_date", "expected_return_date", "book", "user")
-        read_only_fields = ("id", "borrow_date", "actual_return_date", "user")
+        fields = ("id", "borrow_date", "actual_return_date", "expected_return_date", "is_active", "book", "user")
+        read_only_fields = ("id", "user", "is_active",)
 
     def create(self, validated_data):
         book = validated_data["book"]
@@ -38,14 +38,33 @@ class BorrowingSerializer(serializers.ModelSerializer):
         old_return_date = instance.actual_return_date
         new_return_date = validated_data.get("actual_return_date")
         instance.actual_return_date = new_return_date
-        instance.save()
         if old_return_date is None and new_return_date is not None:
+            instance.is_active = False
             instance.book.return_book()
+        instance.save()
         return instance
+
+
+class BorrowingCreateSerializer(BorrowingSerializer):
+    class Meta:
+        model = Borrowing
+        fields = ("id", "borrow_date", "actual_return_date", "expected_return_date", "book", "user")
+        read_only_fields = ("id", "borrow_date", "actual_return_date", "user")
+
+
+class BorrowingUpdateSerializer(BorrowingSerializer):
+    class Meta:
+        model = Borrowing
+        fields = ("id", "borrow_date", "actual_return_date", "expected_return_date", "book", "user")
+        read_only_fields = ("id", "borrow_date", "expected_return_date", "user", "book")
 
 
 class BorrowingListSerializer(BorrowingSerializer):
     book = BookTitleSerializer()
+
+    class Meta:
+        model = Borrowing
+        fields = ("id", "borrow_date", "actual_return_date", "expected_return_date", "is_active", "book", "user")
 
 
 class BorrowingDetailSerializer(BorrowingSerializer):
@@ -54,5 +73,4 @@ class BorrowingDetailSerializer(BorrowingSerializer):
 
     class Meta:
         model = Borrowing
-        fields = ("id", "borrow_date", "actual_return_date", "expected_return_date", "book", "user")
-        read_only_fields = ("id", "borrow_date", "actual_return_date", "user")
+        fields = ("id", "borrow_date", "actual_return_date", "expected_return_date", "is_active", "book", "user")
