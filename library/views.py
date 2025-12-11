@@ -21,6 +21,13 @@ class BookViewSet(viewsets.ModelViewSet):
     serializer_class = BookSerializer
     permission_classes = (IsAdminOrAllReadOnly,)
 
+    def get_queryset(self):
+        queryset = self.queryset
+        title = self.request.GET.get("title")
+        if title:
+            queryset = queryset.filter(title__icontains=title)
+        return queryset.distinct()
+
 
 class BorrowingViewSet(
     mixins.CreateModelMixin,
