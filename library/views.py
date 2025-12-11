@@ -17,7 +17,7 @@ from library.models import (
 class BookViewSet(viewsets.ModelViewSet):
     queryset = Book.objects.all().order_by("id")
     serializer_class = BookSerializer
-    permission_classes = (IsAdminOrAllReadOnly, )
+    permission_classes = (IsAdminOrAllReadOnly,)
 
 
 class BorrowingViewSet(
@@ -31,6 +31,12 @@ class BorrowingViewSet(
                 .order_by("id")
                 .select_related("book", "user"))
     serializer_class = BorrowingSerializer
+
+    def get_queryset(self):
+        queryset = self.queryset
+        if not self.request.user.is_superuser:
+            queryset = queryset.filter(user=self.request.user)
+        return queryset
 
     def get_serializer_class(self):
         if self.action == "list":
