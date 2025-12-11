@@ -1,5 +1,6 @@
 from rest_framework import viewsets, mixins
 from rest_framework.viewsets import GenericViewSet
+from library.permissions import IsAdminOrAllReadOnly
 
 from library.serializers import (
     BookSerializer,
@@ -16,6 +17,7 @@ from library.models import (
 class BookViewSet(viewsets.ModelViewSet):
     queryset = Book.objects.all().order_by("id")
     serializer_class = BookSerializer
+    permission_classes = (IsAdminOrAllReadOnly, )
 
 
 class BorrowingViewSet(
