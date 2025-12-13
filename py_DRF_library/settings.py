@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django_q",
     "rest_framework",
     "rest_framework_simplejwt",
     "debug_toolbar",
@@ -116,7 +117,7 @@ AUTH_USER_MODEL = "user.User"
 
 LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = "UTC"
+TIME_ZONE = "Europe/Kiev"
 
 USE_I18N = True
 
@@ -124,6 +125,19 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
+
+Q_CLUSTER = {
+    "name": "django_q",
+    "workers": 4,
+    "timeout": 60,
+    "retry": 60,
+    "queue_limit": 50,
+    "bulk": 10,
+    "orm": "default",
+    "cached": 200,
+    "save_limit": 250,
+    "listen": True,
+}
 
 STATIC_URL = "static/"
 

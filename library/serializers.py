@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from library.helper import send_telegram_message
+from library.telegram import send_telegram_message
 from library.models import (
     Book,
     Borrowing,
