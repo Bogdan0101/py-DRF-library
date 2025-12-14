@@ -83,7 +83,11 @@ class PaymentViewSet(
 
     def get_queryset(self):
         queryset = self.queryset
+
         if self.request.user.is_superuser:
+            id_user = self.request.GET.get("id_user")
+            if id_user:
+                queryset = queryset.filter(borrowing__user__id=id_user)
             return queryset.distinct()
 
         queryset = queryset.filter(borrowing__user=self.request.user)
