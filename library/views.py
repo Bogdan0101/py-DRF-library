@@ -9,10 +9,12 @@ from library.serializers import (
     BorrowingDetailSerializer,
     BorrowingCreateSerializer,
     BorrowingUpdateSerializer,
+    PaymentSerializer,
 )
 from library.models import (
     Book,
     Borrowing,
+    Payment,
 )
 
 
@@ -67,3 +69,22 @@ class BorrowingViewSet(
         if self.action in ("update", "partial_update"):
             return BorrowingUpdateSerializer
         return BorrowingSerializer
+
+
+class PaymentViewSet(
+    mixins.ListModelMixin,
+    mixins.RetrieveModelMixin,
+    GenericViewSet,
+):
+    queryset = (Payment.objects.all()
+                .select_related("borrowing", "borrowing__user", "borrowing__book")
+                .order_by("id"))
+    serializer_class = PaymentSerializer
+
+    def get_queryset(self):
+        queryset = self.queryset
+        if self.request.user.is_superuser:
+            return queryset.distinct()
+
+        queryset = queryset.filter(borrowing__user=self.request.user)
+        return queryset.distinct()
