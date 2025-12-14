@@ -2,7 +2,7 @@ from rest_framework import serializers
 from library.telegram import send_telegram_message
 from library.models import (
     Book,
-    Borrowing,
+    Borrowing, Payment,
 )
 
 
@@ -112,3 +112,10 @@ class BorrowingDetailSerializer(BorrowingSerializer):
                   "is_active",
                   "book",
                   "user")
+
+
+class PaymentSerializer(serializers.ModelSerializer):
+    borrowing = BorrowingDetailSerializer()
+    class Meta:
+        model = Payment
+        fields = ("id", "status", "type_transaction", "borrowing", "session_url", "session_id")
