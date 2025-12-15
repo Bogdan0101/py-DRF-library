@@ -77,8 +77,10 @@ class PaymentViewSet(
     GenericViewSet,
 ):
     queryset = (Payment.objects.all()
-                .select_related("borrowing", "borrowing__user", "borrowing__book")
-                .order_by("id"))
+                .select_related("borrowing",
+                                "borrowing__user",
+                                "borrowing__book"
+                                ).order_by("id"))
     serializer_class = PaymentSerializer
 
     def get_queryset(self):

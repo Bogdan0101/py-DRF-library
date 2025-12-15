@@ -63,16 +63,40 @@ class Payment(models.Model):
         PAYMENT = "PAYMENT"
         FINE = "FINE"
 
-    status = models.CharField(max_length=10, choices=StatusChoices.choices)
+    status = models.CharField(
+        max_length=10,
+        choices=StatusChoices.choices,
+        default=StatusChoices.PENDING,
+    )
     type_transaction = models.CharField(
         max_length=10,
-        choices=TypeChoices.choices)
+        choices=TypeChoices.choices,
+        default=TypeChoices.PAYMENT,
+    )
     borrowing = models.ForeignKey(
         Borrowing,
         on_delete=models.CASCADE,
-        related_name="payments")
-    session_url = models.URLField()
-    session_id = models.CharField(max_length=200)
+        related_name="payments",
+    )
+    session_url = models.URLField(blank=True, null=True)
+    session_id = models.CharField(max_length=200, blank=True, null=True)
+
+    def amount_in_cents(self) -> int:
+        borrowing = self.borrowing
+        book = self.borrowing.book
+        daily_fee = book.daily_fee
+        if self.type_transaction == self.TypeChoices.FINE:  # FINE
+            if not borrowing.actual_return_date:
+                return 0
+            days = (borrowing
+                    .actual_return_date - borrowing.
+                    expected_return_date).days
+            days = max(days, 0)
+        else:  # PAYMENT
+            days = (borrowing
+                    .expected_return_date - borrowing
+                    .borrow_date).days
+        return int(daily_fee * days * 100)
 
     def __str__(self):
         return (f"{self.status}, "

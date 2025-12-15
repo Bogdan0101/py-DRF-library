@@ -28,10 +28,16 @@ def check_overdue_borrowings():
 
 def cleanup_tasks():
     try:
-        old_tasks = Task.objects.filter(started__lte=timezone.now() - timedelta(days=7))
+        old_tasks = (Task
+                     .objects
+                     .filter
+                     (started__lte=timezone.now() - timedelta(days=7)))
         tasks_deleted = old_tasks.count()
         old_tasks.delete()
-        old_schedules = Schedule.objects.filter(next_run__lte=timezone.now() - timedelta(days=7))
+        old_schedules = (Schedule
+                         .objects
+                         .filter
+                         (next_run__lte=timezone.now() - timedelta(days=7)))
         schedules_deleted = old_schedules.count()
         old_schedules.delete()
         print(f"Deleted {tasks_deleted} old tasks.")

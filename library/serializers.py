@@ -116,6 +116,13 @@ class BorrowingDetailSerializer(BorrowingSerializer):
 
 class PaymentSerializer(serializers.ModelSerializer):
     borrowing = BorrowingDetailSerializer()
+
     class Meta:
         model = Payment
-        fields = ("id", "status", "type_transaction", "borrowing", "session_url", "session_id")
+        fields = ("id",
+                  "status",
+                  "type_transaction",
+                  "borrowing",
+                  "session_url",
+                  "session_id"
+                  )

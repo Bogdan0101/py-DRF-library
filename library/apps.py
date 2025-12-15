@@ -20,7 +20,10 @@ class LibraryConfig(AppConfig):
                         func="library.tasks.check_overdue_borrowings",
                         defaults={
                             "schedule_type": "D",
-                            "next_run": make_aware(datetime.combine(date.today(), time(8, 30))),
+                            "next_run": make_aware(datetime
+                                                   .combine
+                                                   (date.today(), time(8, 30))
+                                                   ),
                             "repeats": -1
                         }
                     )
@@ -30,7 +33,10 @@ class LibraryConfig(AppConfig):
                         func="library.tasks.cleanup_tasks",
                         defaults={
                             "schedule_type": "W",
-                            "next_run": make_aware(datetime.combine(date.today(), time(1, 0))),
+                            "next_run": make_aware(datetime
+                                                   .combine
+                                                   (date.today(), time(1, 0))
+                                                   ),
                             "repeats": -1
                         },
                     )
