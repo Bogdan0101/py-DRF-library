@@ -1,19 +1,17 @@
-import os
-
 import stripe
-from dotenv import load_dotenv
+from django.conf import settings
 
-load_dotenv()
-
-stripe.api_key = os.getenv("STRIPE_SECRET_KEY")
+stripe.api_key = settings.STRIPE_SECRET_KEY
 
 
-def create_stripe_session(amount: int, name: str):
-
+def create_stripe_session(amount: int, name: str) -> stripe.checkout.Session:
     """
     amount=1000 (10.00$)
     Stripe Checkout Session is created in test mode for backend-only
     """
+
+    if amount <= 0:
+        raise ValueError("Amount must be positive")
 
     session = stripe.checkout.Session.create(
         payment_method_types=["card"],

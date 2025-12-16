@@ -50,6 +50,11 @@ class Borrowing(models.Model):
     )
     is_active = models.BooleanField(default=True)
 
+    def total_amount_cents(self) -> int:
+        days = (self.expected_return_date - self.borrow_date).days
+        days = max(days, 1)
+        return int(self.book.daily_fee * days * 100)
+
     def __str__(self):
         return f"{self.book.title}, {self.borrow_date}"
 
@@ -80,23 +85,6 @@ class Payment(models.Model):
     )
     session_url = models.URLField(blank=True, null=True)
     session_id = models.CharField(max_length=200, blank=True, null=True)
-
-    def amount_in_cents(self) -> int:
-        borrowing = self.borrowing
-        book = self.borrowing.book
-        daily_fee = book.daily_fee
-        if self.type_transaction == self.TypeChoices.FINE:  # FINE
-            if not borrowing.actual_return_date:
-                return 0
-            days = (borrowing
-                    .actual_return_date - borrowing.
-                    expected_return_date).days
-            days = max(days, 0)
-        else:  # PAYMENT
-            days = (borrowing
-                    .expected_return_date - borrowing
-                    .borrow_date).days
-        return int(daily_fee * days * 100)
 
     def __str__(self):
         return (f"{self.status}, "

@@ -18,7 +18,9 @@ def create_payment_for_borrowing(borrowing):
 def create_fine_for_borrowing(borrowing):
     if not borrowing.actual_return_date:
         return None
-    days_of_overdue = (borrowing.actual_return_date - borrowing.expected_return_date).days
+    days_of_overdue = (borrowing
+                       .actual_return_date - borrowing
+                       .expected_return_date).days
     if days_of_overdue <= 0:
         return None
     daily_fee = borrowing.book.daily_fee
