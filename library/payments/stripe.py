@@ -28,7 +28,10 @@ def create_stripe_session(amount: int, name: str) -> stripe.checkout.Session:
             }
         ],
         mode="payment",
-        success_url="https://example.com/success",
-        cancel_url="https://example.com/cancel",
+        success_url=(
+            "https://localhost:8000/api/payments/success/"
+            "?session_id={CHECKOUT_SESSION_ID}"
+        ),
+        cancel_url="https://localhost:8000/api/payments/cancel/",
     )
     return session

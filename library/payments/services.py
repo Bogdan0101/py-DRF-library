@@ -32,6 +32,7 @@ def create_fine_for_borrowing(borrowing):
     )
     return Payment.objects.create(
         borrowing=borrowing,
+        type_transaction=Payment.TypeChoices.FINE,
         session_url=session.url,
         session_id=session.id,
     )
