@@ -6,4 +6,4 @@ urlpatterns = [
     path("cancel/", stripe_cancel, name="stripe-cancel"),
 ]
 
-app_name = "payments"
+app_name = "stripe"

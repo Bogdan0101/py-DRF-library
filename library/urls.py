@@ -12,7 +12,7 @@ router.register("borrowings", BorrowingViewSet, basename="borrowings")
 router.register("payments", PaymentViewSet, basename="payments")
 urlpatterns = [
     path("", include(router.urls)),
-    path("payments/", include("library.payments.urls")),
+    path("stripe/", include("library.payments.urls")),
 ]
 
 app_name = "library"
