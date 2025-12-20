@@ -1,3 +1,5 @@
+from drf_spectacular.types import OpenApiTypes
+from drf_spectacular.utils import extend_schema, OpenApiParameter
 from rest_framework import viewsets, mixins
 from rest_framework.viewsets import GenericViewSet
 from library.permissions import IsAdminOrAllReadOnly
@@ -30,6 +32,16 @@ class BookViewSet(viewsets.ModelViewSet):
             queryset = queryset.filter(title__icontains=title)
         return queryset.distinct()
 
+    @extend_schema(parameters=[
+        OpenApiParameter(
+            name="title",
+            type=str,
+            description="Filter by title (ex. ?title=book)",
+        )
+    ])
+    def list(self, request, *args, **kwargs):
+        return super().list(request, *args, **kwargs)
+
 
 class BorrowingViewSet(
     mixins.CreateModelMixin,
@@ -58,6 +70,21 @@ class BorrowingViewSet(
 
         queryset = queryset.filter(user=self.request.user)
         return queryset.distinct()
+
+    @extend_schema(parameters=[
+        OpenApiParameter(
+            name="is_active",
+            type=bool,
+            description="Filter by is_active (ex. ?is_active=True)",
+        ),
+        OpenApiParameter(
+            name="id_user",
+            type=int,
+            description="Filter by id_user (ex. ?id_user=2)",
+        )
+    ])
+    def list(self, request, *args, **kwargs):
+        return super().list(request, *args, **kwargs)
 
     def get_serializer_class(self):
         if self.action == "list":
@@ -94,3 +121,13 @@ class PaymentViewSet(
 
         queryset = queryset.filter(borrowing__user=self.request.user)
         return queryset.distinct()
+
+    @extend_schema(parameters=[
+        OpenApiParameter(
+            name="id_user",
+            type=int,
+            description="Filter by id_user (ex. ?id_user=2)",
+        )
+    ])
+    def list(self, request, *args, **kwargs):
+        return super().list(request, *args, **kwargs)
