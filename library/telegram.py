@@ -9,6 +9,9 @@ CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
 
 
 def send_telegram_message(message: str):
+    if not BOT_TOKEN or not CHAT_ID:
+        return
+
     url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage"  # noqa: E231
     data = {
         "chat_id": CHAT_ID,
