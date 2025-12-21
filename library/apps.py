@@ -17,7 +17,8 @@ class LibraryConfig(AppConfig):
             return
 
         try:
-            if "django_q_schedule" not in connection.introspection.table_names():
+            if ("django_q_schedule" not in connection
+                    .introspection.table_names()):
                 return
 
             with transaction.atomic():
