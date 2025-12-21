@@ -83,8 +83,8 @@ class Payment(models.Model):
         on_delete=models.CASCADE,
         related_name="payments",
     )
-    session_url = models.URLField(blank=True, null=True)
-    session_id = models.CharField(max_length=200, blank=True, null=True)
+    session_url = models.TextField(blank=True, null=True)
+    session_id = models.CharField(max_length=500, blank=True, null=True)
 
     def __str__(self):
         return (f"{self.status}, "

@@ -1,7 +1,7 @@
 from django.apps import AppConfig
 from datetime import datetime, time, date
 
-from django.db import transaction
+from django.db import transaction, connection
 from django.utils.timezone import make_aware
 from django.db.utils import OperationalError, ProgrammingError
 
@@ -13,37 +13,38 @@ class LibraryConfig(AppConfig):
     def ready(self):
         try:
             from django_q.models import Schedule
+        except ImportError:
+            return
+
+        try:
+            if "django_q_schedule" not in connection.introspection.table_names():
+                return
 
             with transaction.atomic():
-                try:
-                    Schedule.objects.get_or_create(
-                        func="library.tasks.check_overdue_borrowings",
-                        defaults={
-                            "schedule_type": "D",
-                            "next_run": make_aware(datetime
-                                                   .combine
-                                                   (date.today(), time(8, 30))
-                                                   ),
-                            "repeats": -1
-                        }
-                    )
-                    print("check_overdue_borrowings task.")
+                Schedule.objects.get_or_create(
+                    func="library.tasks.check_overdue_borrowings",
+                    defaults={
+                        "schedule_type": "D",
+                        "next_run": make_aware(datetime
+                                               .combine
+                                               (date.today(), time(8, 30))
+                                               ),
+                        "repeats": -1
+                    }
+                )
+                print("check_overdue_borrowings task.")
 
-                    Schedule.objects.get_or_create(
-                        func="library.tasks.cleanup_tasks",
-                        defaults={
-                            "schedule_type": "W",
-                            "next_run": make_aware(datetime
-                                                   .combine
-                                                   (date.today(), time(1, 0))
-                                                   ),
-                            "repeats": -1
-                        },
-                    )
-                    print("cleanup_tasks task.")
-
-                except (OperationalError, ProgrammingError):
-                    pass
-
-        except ImportError:
+                Schedule.objects.get_or_create(
+                    func="library.tasks.cleanup_tasks",
+                    defaults={
+                        "schedule_type": "W",
+                        "next_run": make_aware(datetime
+                                               .combine
+                                               (date.today(), time(1, 0))
+                                               ),
+                        "repeats": -1
+                    },
+                )
+                print("cleanup_tasks task.")
+        except (OperationalError, ProgrammingError):
             pass

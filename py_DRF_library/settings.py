@@ -16,8 +16,6 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-STRIPE_SECRET_KEY = os.getenv("STRIPE_SECRET_KEY")
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -25,8 +23,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-740qkl052jjx#2!(r)&f)7$a7q8k5rjx#enka$78edi#jo&djs"
+SECRET_KEY = os.environ.get("SECRET_KEY")
 
+if not SECRET_KEY:
+    raise ValueError("SECRET_KEY is not set in environment variables")
+
+STRIPE_SECRET_KEY = os.getenv("STRIPE_SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -88,12 +90,28 @@ WSGI_APPLICATION = "py_DRF_library.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+USE_DOCKER = os.environ.get("USE_DOCKER", "0") == "1"
+
+if USE_DOCKER:
+    # for DockerHub
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": os.environ["POSTGRES_DB"],
+            "USER": os.environ["POSTGRES_USER"],
+            "PASSWORD": os.environ["POSTGRES_PASSWORD"],
+            "HOST": os.environ["POSTGRES_HOST"],
+            "PORT": os.environ["POSTGRES_PORT"],
+        }
     }
-}
+else:
+    # for GitHub
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
+        }
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
