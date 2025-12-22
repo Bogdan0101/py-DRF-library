@@ -1,9 +1,11 @@
+import logging
 from django.apps import AppConfig
 from datetime import datetime, time, date
-
 from django.db import transaction, connection
 from django.utils.timezone import make_aware
 from django.db.utils import OperationalError, ProgrammingError
+
+logger = logging.getLogger(__name__)
 
 
 class LibraryConfig(AppConfig):
@@ -33,7 +35,7 @@ class LibraryConfig(AppConfig):
                         "repeats": -1
                     }
                 )
-                print("check_overdue_borrowings task.")
+                logger.info("check_overdue_borrowings task")
 
                 Schedule.objects.get_or_create(
                     func="library.tasks.cleanup_tasks",
@@ -46,6 +48,7 @@ class LibraryConfig(AppConfig):
                         "repeats": -1
                     },
                 )
-                print("cleanup_tasks task.")
+                logger.info("cleanup_tasks task")
+
         except (OperationalError, ProgrammingError):
             pass

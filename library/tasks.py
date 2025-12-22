@@ -1,6 +1,9 @@
+import logging
 from datetime import date, timedelta
 from django.utils import timezone
 from django_q.models import Task, Schedule
+
+logger = logging.getLogger(__name__)
 
 
 def check_overdue_borrowings():
@@ -40,7 +43,7 @@ def cleanup_tasks():
                          (next_run__lte=timezone.now() - timedelta(days=7)))
         schedules_deleted = old_schedules.count()
         old_schedules.delete()
-        print(f"Deleted {tasks_deleted} old tasks.")
-        print(f"Deleted {schedules_deleted} old schedules.")
+        logger.info(f"Deleted {tasks_deleted} old tasks.")
+        logger.info(f"Deleted {schedules_deleted} old schedules.")
     except Exception as e:
-        print(e)
+        logger.exception(e)
