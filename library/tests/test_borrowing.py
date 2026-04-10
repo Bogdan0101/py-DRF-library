@@ -17,6 +17,15 @@ class AdminBorrowingTests(TestCase):
     def setUp(self):
         self.patcher = patch("library.serializers.send_telegram_message")
         self.mock_telegram = self.patcher.start()
+        self.patcher_stripe = patch("library.payments.stripe.stripe.checkout.Session.create")
+        self.mock_stripe = self.patcher_stripe.start()
+
+        self.mock_stripe.return_value = type("obj", (object,), {
+            "id": "test_session_id",
+            "url": "http://test-url.com",
+        })
+        self.addCleanup(self.patcher_stripe.stop)
+
         self.addCleanup(self.patcher.stop)
 
         cache.clear()
@@ -110,6 +119,14 @@ class UserAuthBorrowingTests(TestCase):
     def setUp(self):
         self.patcher = patch("library.serializers.send_telegram_message")
         self.mock_telegram = self.patcher.start()
+        self.patcher_stripe = patch("library.payments.stripe.stripe.checkout.Session.create")
+        self.mock_stripe = self.patcher_stripe.start()
+
+        self.mock_stripe.return_value = type("obj", (object,), {
+            "id": "test_session_id",
+            "url": "http://test-url.com",
+        })
+        self.addCleanup(self.patcher_stripe.stop)
         self.addCleanup(self.patcher.stop)
 
         cache.clear()
@@ -189,4 +206,3 @@ class UnauthenticatedBorrowingTests(TestCase):
     def test_get_unauthenticated_user(self):
         res = self.client.get(BORROWING_URL)
         self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
-
