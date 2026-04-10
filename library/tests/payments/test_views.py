@@ -1,4 +1,5 @@
 from datetime import timedelta, date
+from unittest import mock
 from unittest.mock import patch
 from django.contrib.auth import get_user_model
 from rest_framework.test import APIClient
@@ -12,9 +13,19 @@ from library.payments.services import create_payment_for_borrowing
 class StripeViewTests(TestCase):
     def setUp(self):
         cache.clear()
-        self.patcher = patch("library.payments.views.stripe.checkout.Session.retrieve")
-        self.mock_retrieve = self.patcher.start()
-        self.addCleanup(self.patcher.stop)
+        self.patcher_retrieve = patch("library.payments.views.stripe.checkout.Session.retrieve")
+        self.mock_retrieve = self.patcher_retrieve.start()
+
+        self.patcher_create = patch("library.payments.stripe.stripe.checkout.Session.create")
+        self.mock_create = self.patcher_create.start()
+
+        self.mock_create.return_value = type("obj", (object,), {
+            "id": "test_session_id",
+            "url": "http://test-url.com",
+        })
+        self.addCleanup(self.patcher_retrieve.stop)
+        self.addCleanup(self.patcher_create.stop)
+
         self.user = get_user_model().objects.create_user(
             email="user@gmail.com",
             first_name="user",
