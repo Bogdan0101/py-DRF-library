@@ -41,6 +41,10 @@ jobs:
           pip install -r requirements.txt
           pip install pytest-django pytest-cov
 
+      - name: Flake8
+        run: |
+          flake8 .
+
       - name: Run migrations
         env:
           POSTGRES_USER: test_user
