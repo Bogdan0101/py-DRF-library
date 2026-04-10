@@ -13,7 +13,7 @@ jobs:
       db:
         image: postgres:16.11-alpine3.23
         env:
-          POSTGRES_DB: test_db_test
+          POSTGRES_DB: library
           POSTGRES_USER: test_user
           POSTGRES_PASSWORD: test_password
           POSTGRES_HOST: 127.0.0.1
@@ -45,7 +45,7 @@ jobs:
         env:
           POSTGRES_USER: test_user
           POSTGRES_PASSWORD: test_password
-          POSTGRES_DB: test_db
+          POSTGRES_DB: library
           POSTGRES_HOST: localhost
           POSTGRES_PORT: 5432
           SECRET_KEY: test_secret_key
@@ -56,7 +56,7 @@ jobs:
         env:
           POSTGRES_USER: test_user
           POSTGRES_PASSWORD: test_password
-          POSTGRES_DB: test_db
+          POSTGRES_DB: library
           POSTGRES_HOST: localhost
           POSTGRES_PORT: 5432
           SECRET_KEY: test_secret_key
